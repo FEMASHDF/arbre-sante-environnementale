@@ -91,6 +91,11 @@ textarea{min-height:96px; resize:vertical}
 .vide{background:#fff; border:2px dashed var(--ligne); border-radius:16px; padding:24px; color:var(--gris)}
 
 /* Mode projection */
+body.projection .quitter{top:20px !important; bottom:auto !important; right:20px !important; left:auto !important; position:absolute; z-index:6}
+.ajout-proj{display:none}
+body.projection .ajout-proj{display:block; position:absolute; right:24px; bottom:24px; z-index:6; font-size:1.05rem; padding:12px 18px; border-radius:14px; background:#3f7a56; color:#fff; border:none; box-shadow:0 8px 20px rgba(0,0,0,.18); cursor:pointer}
+body.projection.saisie-ouverte .panneau{display:block !important; position:fixed; right:24px; bottom:84px; top:auto; width:min(420px, 92vw); max-height:calc(100vh - 120px); overflow:auto; z-index:7; border-radius:20px; box-shadow:0 20px 50px rgba(0,0,0,.25)}
+body.projection.saisie-ouverte .panneau .actions-bas, body.projection.saisie-ouverte .panneau .outils{display:none}
 body.projection .panneau, body.projection .catalogue{display:none}
 body.projection .scene{grid-template-columns:1fr}
 .legende-projection{display:none}
@@ -143,6 +148,7 @@ body.projection .quitter{display:block}
     <div class="etape" id="etape">L'arbre attend ses premières feuilles</div>
     <div class="legende-projection" id="legende" aria-live="polite"></div>
     <button class="btn sec quitter" type="button" id="quitter">Quitter la projection</button>
+    <button class="btn ajout-proj" type="button" id="ajout-proj">＋ Ajouter une feuille</button>
   </div>
 
   <aside class="panneau">
@@ -379,7 +385,8 @@ function legende(){
   $("#legende").innerHTML = `${c.type === "idee" ? "" : ""} ${esc(c.texte)}<small>${esc(c.msp)} · ${THEMES[c.theme].emo} ${esc(THEMES[c.theme].nom)}</small>`;
 }
 $("#projeter").onclick = () => { document.body.classList.add("projection"); legende(); rotation = setInterval(legende, 6000); document.documentElement.requestFullscreen?.().catch(() => {}); };
-$("#quitter").onclick = () => { document.body.classList.remove("projection"); clearInterval(rotation); if (document.fullscreenElement) document.exitFullscreen(); };
+$("#ajout-proj").onclick = () => { const o = document.body.classList.toggle("saisie-ouverte"); $("#ajout-proj").textContent = o ? "✕ Fermer la saisie" : "＋ Ajouter une feuille"; if (o) setTimeout(() => $("#msp").focus(), 50); };
+$("#quitter").onclick = () => { document.body.classList.remove("projection", "saisie-ouverte"); $("#ajout-proj").textContent = "＋ Ajouter une feuille"; clearInterval(rotation); if (document.fullscreenElement) document.exitFullscreen(); };
 
 /* ---------- Aperçu ---------- */
 $("#apercu").onclick = () => { apercu = !apercu; $("#apercu").textContent = apercu ? "Revenir à l'arbre réel" : "Aperçu d'un arbre rempli"; tout(); };
