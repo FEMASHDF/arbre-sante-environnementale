@@ -92,7 +92,8 @@ textarea{min-height:96px; resize:vertical}
 
 /* Mode projection */
 body.projection .etape{display:none}
-body.projection .legende-projection{bottom:auto !important; top:20px; left:auto !important; right:236px; transform:none !important; max-width:400px}
+body.projection .legende-projection{top:auto !important; bottom:150px !important; left:50% !important; right:auto !important; transform:translateX(-50%) !important; max-width:min(520px, 60vw)}
+@media (max-width:1100px){ body.projection .legende-projection{bottom:200px !important} }
 body.projection .quitter{top:20px !important; bottom:auto !important; right:20px !important; left:auto !important; position:absolute; z-index:6}
 .ajout-proj{display:none}
 body.projection .ajout-proj{display:block; position:absolute; right:24px; bottom:24px; z-index:6; font-size:1.05rem; padding:12px 18px; border-radius:14px; background:#3f7a56; color:#fff; border:none; box-shadow:0 8px 20px rgba(0,0,0,.18); cursor:pointer}
